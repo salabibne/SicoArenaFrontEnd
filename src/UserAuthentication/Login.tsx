@@ -1,5 +1,5 @@
 import React from "react";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { GoogleOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Flex } from "antd";
 import { Link } from "react-router-dom";
 
@@ -54,7 +54,14 @@ const Login: React.FC = () => {
                   Register now
                 </p>
               </Link>
-              {/* <Button className="">Register Now</Button> */}
+              <div className="border-t-2 mt-4 border-indigo-500 ...">
+                <h1 className="text-center mt-2 text-gray-500">
+                  or you can sign in with
+                </h1>
+                <button className="flex mt-4 mx-auto">
+                  <GoogleOutlined className="text-2xl " />
+                </button>
+              </div>
             </div>
           </Form.Item>
         </Form>
