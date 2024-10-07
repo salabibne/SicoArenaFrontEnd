@@ -1,26 +1,10 @@
 import React, { useState } from "react";
-import type { CascaderProps } from "antd";
-import {
-  AutoComplete,
-  Button,
-  Cascader,
-  Checkbox,
-  Col,
-  Form,
-  Input,
-  InputNumber,
-  Row,
-  Select,
-} from "antd";
+import { AutoComplete, Button, Checkbox, Form, Input, Select } from "antd";
 import { Link } from "react-router-dom";
+import useAuthStore from "../Store/useAuthStore";
+import ShowPopUp from "../layout/Modal"; // Import your ShowPopUp component
 
 const { Option } = Select;
-
-interface DataNodeType {
-  value: string;
-  label: string;
-  children?: DataNodeType[];
-}
 
 const formItemLayout = {
   labelCol: {
@@ -35,45 +19,45 @@ const formItemLayout = {
 
 const tailFormItemLayout = {
   wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
+    xs: { span: 24, offset: 0 },
+    sm: { span: 16, offset: 8 },
   },
 };
 
 const Registration: React.FC = () => {
   const [form] = Form.useForm();
 
+  // Calling the Zustand hook for signup functionality
+  const signUpForm = useAuthStore((state) => state.signUp);
+
+  // State for managing pop-up visibility
+  const [success, setSuccess] = useState<boolean | undefined>(undefined);
+  const [error, setError] = useState<string | undefined>(undefined);
+
   const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
+    // Call the signup function
+    signUpForm(values.email, values.password)
+      .then(() => {
+        setSuccess(true); // Show success message
+        setError(undefined); // Clear any previous error
+      })
+      .catch((error) => {
+        setSuccess(false); // Show error message
+        setError(` ${error}`); // Set error message
+        console.error("Error registering user", error); // Log the error for debugging
+      });
   };
 
-  const [autoCompleteResult, setAutoCompleteResult] = useState<string[]>([]);
-
-  const onWebsiteChange = (value: string) => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(
-        [".com", ".org", ".net"].map((domain) => `${value}${domain}`)
-      );
-    }
+  // Reset success and error state on modal close
+  const closeModal = () => {
+    setSuccess(undefined);
+    setError(undefined);
   };
-
-  const websiteOptions = autoCompleteResult.map((website) => ({
-    label: website,
-    value: website,
-  }));
 
   return (
     <div className="flex flex-col items-center justify-center mt-16">
       <div className="border rounded-md border-[#17295A] p-8">
-        <h1 className="mt-8 mb-8 text-center text-4xl font bold text-[#17295A]">
+        <h1 className="mt-8 mb-8 text-center text-4xl font-bold text-[#17295A]">
           Sign Up
         </h1>
         <Form
@@ -81,10 +65,7 @@ const Registration: React.FC = () => {
           form={form}
           name="register"
           onFinish={onFinish}
-          initialValues={{
-            residence: ["zhejiang", "hangzhou", "xihu"],
-            prefix: "86",
-          }}
+          initialValues={{ prefix: "86" }}
           style={{ maxWidth: 600 }}
           scrollToFirstError
         >
@@ -92,14 +73,8 @@ const Registration: React.FC = () => {
             name="email"
             label="E-mail"
             rules={[
-              {
-                type: "email",
-                message: "The input is not valid E-mail!",
-              },
-              {
-                required: true,
-                message: "Please input your E-mail!",
-              },
+              { type: "email", message: "The input is not valid E-mail!" },
+              { required: true, message: "Please input your E-mail!" },
             ]}
           >
             <Input />
@@ -108,12 +83,7 @@ const Registration: React.FC = () => {
           <Form.Item
             name="password"
             label="Password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
+            rules={[{ required: true, message: "Please input your password!" }]}
             hasFeedback
           >
             <Input.Password />
@@ -125,17 +95,14 @@ const Registration: React.FC = () => {
             dependencies={["password"]}
             hasFeedback
             rules={[
-              {
-                required: true,
-                message: "Please confirm your password!",
-              },
+              { required: true, message: "Please confirm your password!" },
               ({ getFieldValue }) => ({
                 validator(_, value) {
                   if (!value || getFieldValue("password") === value) {
                     return Promise.resolve();
                   }
                   return Promise.reject(
-                    new Error("The new password that you entered do not match!")
+                    new Error("The two passwords do not match!")
                   );
                 },
               }),
@@ -147,14 +114,7 @@ const Registration: React.FC = () => {
           <Form.Item
             name="nickname"
             label="Nickname"
-            tooltip="What do you want others to call you?"
-            rules={[
-              {
-                required: true,
-                message: "Please input your nickname!",
-                whitespace: true,
-              },
-            ]}
+            rules={[{ required: true, message: "Please input your nickname!" }]}
           >
             <Input />
           </Form.Item>
@@ -198,6 +158,7 @@ const Registration: React.FC = () => {
               I have read the <a href="">agreement</a>
             </Checkbox>
           </Form.Item>
+
           <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">
               Register
@@ -212,6 +173,16 @@ const Registration: React.FC = () => {
             </div>
           </Form.Item>
         </Form>
+
+        {/* Modal for showing success or error pop-up */}
+        {success !== undefined && (
+          <ShowPopUp
+            visible={true}
+            success={success}
+            error={error}
+            onClose={closeModal} // Close modal by resetting state
+          />
+        )}
       </div>
     </div>
   );
