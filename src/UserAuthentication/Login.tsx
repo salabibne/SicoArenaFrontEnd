@@ -1,11 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { GoogleOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Flex } from "antd";
 import { Link } from "react-router-dom";
+import useAuthStore from "../Store/useAuthStore";
+import ShowPopUp from "../layout/Modal";
 
 const Login: React.FC = () => {
+  const loginForm = useAuthStore((state) => state.signIn);
+
+  const [success, setSuccess] = useState<boolean | undefined>(undefined);
+  const [error, setError] = useState<string | undefined>(undefined);
+  const [flag, setFlag] = useState<string | undefined>(undefined);
+
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
+    loginForm(values.username, values.password)
+      .then(() => {
+        setSuccess(true);
+        setError(undefined);
+        setFlag("login");
+      })
+      .catch((err) => {
+        setSuccess(false); // Show error message
+        setError(` ${err}`); // Set error message
+        console.error("Error logging in user", err); // Log the error for debugging
+      });
+  };
+
+  const closeModal = () => {
+    setSuccess(undefined);
+    setError(undefined);
   };
 
   return (
@@ -65,6 +89,15 @@ const Login: React.FC = () => {
             </div>
           </Form.Item>
         </Form>
+        {success !== undefined && (
+          <ShowPopUp
+            visible={true}
+            success={success}
+            error={error}
+            onClose={closeModal} // Close modal by resetting state
+            flag={flag}
+          />
+        )}
       </div>
     </div>
   );

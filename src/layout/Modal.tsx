@@ -6,6 +6,7 @@ interface ShowPopUpProps {
   error?: string;
   visible: boolean; // Pass visible state from parent
   onClose: () => void; // Function to close the modal
+  flag: string | undefined;
 }
 
 const ShowPopUp: React.FC<ShowPopUpProps> = ({
@@ -13,6 +14,7 @@ const ShowPopUp: React.FC<ShowPopUpProps> = ({
   error,
   visible,
   onClose,
+  flag,
 }) => {
   return (
     <Modal
@@ -21,11 +23,17 @@ const ShowPopUp: React.FC<ShowPopUpProps> = ({
       onOk={onClose} // Trigger onClose when user clicks "Ok"
       onCancel={onClose} // Trigger onClose when user clicks "Cancel"
     >
-      {success && (
+      {success && flag === "register" && (
         <p className="text-green-500">User registered successfully</p>
       )}
-      {error && (
+      {error && flag === "register" && (
         <p className="text-red-500">Error registering user. Error: {error}</p>
+      )}
+      {success && flag === "login" && (
+        <p className="text-green-500">User logged in successfully</p>
+      )}
+      {error && flag === "login" && (
+        <p className="text-red-500">Error logging in user. Error: {error}</p>
       )}
     </Modal>
   );

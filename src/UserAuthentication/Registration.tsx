@@ -33,6 +33,7 @@ const Registration: React.FC = () => {
   // State for managing pop-up visibility
   const [success, setSuccess] = useState<boolean | undefined>(undefined);
   const [error, setError] = useState<string | undefined>(undefined);
+  const [flag, setFlag] = useState<string | undefined>(undefined);
 
   const onFinish = (values: any) => {
     // Call the signup function
@@ -40,6 +41,7 @@ const Registration: React.FC = () => {
       .then(() => {
         setSuccess(true); // Show success message
         setError(undefined); // Clear any previous error
+        setFlag("register");
       })
       .catch((error) => {
         setSuccess(false); // Show error message
@@ -181,6 +183,7 @@ const Registration: React.FC = () => {
             success={success}
             error={error}
             onClose={closeModal} // Close modal by resetting state
+            flag={flag}
           />
         )}
       </div>
