@@ -3,6 +3,7 @@ import { AutoComplete, Button, Checkbox, Form, Input, Select } from "antd";
 import { Link } from "react-router-dom";
 import useAuthStore from "../Store/useAuthStore";
 import ShowPopUp from "../UIComponents/Modal"; // Import your ShowPopUp component
+import axios from "axios";
 
 const { Option } = Select;
 
@@ -34,14 +35,33 @@ const Registration: React.FC = () => {
   const [success, setSuccess] = useState<boolean | undefined>(undefined);
   const [error, setError] = useState<string | undefined>(undefined);
   const [flag, setFlag] = useState<string | undefined>(undefined);
+  const [isDataSaved, setIsDataSaved] = useState<boolean | undefined>(
+    undefined
+  );
 
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
     // Call the signup function
+    values.role = "user";
+    console.log(values);
     signUpForm(values.email, values.password)
-      .then(() => {
+      .then(async () => {
         setSuccess(true); // Show success message
         setError(undefined); // Clear any previous error
         setFlag("register");
+
+        try {
+          const response = await axios.post(
+            "http://localhost:3000/users",
+            values
+          );
+          console.log(response);
+          if (response.statusText == "Created") {
+            setIsDataSaved(true);
+          }
+        } catch (error) {
+          console.log(error);
+          setIsDataSaved(false);
+        }
       })
       .catch((error) => {
         setSuccess(false); // Show error message
@@ -177,7 +197,7 @@ const Registration: React.FC = () => {
         </Form>
 
         {/* Modal for showing success or error pop-up */}
-        {success !== undefined && (
+        {success !== undefined && isDataSaved !== undefined && (
           <ShowPopUp
             visible={true}
             success={success}
