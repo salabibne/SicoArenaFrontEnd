@@ -3,7 +3,7 @@ import { GoogleOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Flex } from "antd";
 import { Link } from "react-router-dom";
 import useAuthStore from "../Store/useAuthStore";
-import ShowPopUp from "../layout/Modal";
+import ShowPopUp from "../UIComponents/Modal";
 
 const Login: React.FC = () => {
   const loginForm = useAuthStore((state) => state.signIn);

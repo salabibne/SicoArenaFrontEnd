@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AutoComplete, Button, Checkbox, Form, Input, Select } from "antd";
 import { Link } from "react-router-dom";
 import useAuthStore from "../Store/useAuthStore";
-import ShowPopUp from "../layout/Modal"; // Import your ShowPopUp component
+import ShowPopUp from "../UIComponents/Modal"; // Import your ShowPopUp component
 
 const { Option } = Select;
 

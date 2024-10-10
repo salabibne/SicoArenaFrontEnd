@@ -5,6 +5,7 @@ import { Menu, Dropdown } from "antd";
 import { icons } from "antd/es/image/PreviewGroup";
 import { useNavigate } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
+import useAuthStore from "../Store/useAuthStore";
 type MenuItem = Required<MenuProps>["items"][number];
 type MenuItemtwo = Required<MenuProps>["itemstwo"][number];
 
@@ -78,9 +79,24 @@ const itemsAuthentications: MenuItem[] = [
   },
 ];
 
+const itemsafterlogin: MenuItem[] = [
+  {
+    label: "Dashboard",
+    key: "dashboard",
+  },
+  {
+    label: "Logout",
+    key: "logout",
+  },
+];
+
 const TopMenu: React.FC = () => {
   const [current, setCurrent] = useState("home");
   const navigate = useNavigate();
+
+  const { user } = useAuthStore();
+  // console.log("user exist", user);
+  const { signOut } = useAuthStore();
 
   const onClick: MenuProps["onClick"] = (e) => {
     setCurrent(e.key);
@@ -94,17 +110,33 @@ const TopMenu: React.FC = () => {
   };
 
   const authenticationMenu = (
-    <Menu
-      items={itemsAuthentications}
-      onClick={(e) => {
-        setCurrent(e.key);
-        if (e.key === "login") {
-          navigate("/login");
-        } else if (e.key === "reg") {
-          navigate("/registration");
-        }
-      }}
-    />
+    <>
+      {user ? (
+        <Menu
+          items={itemsafterlogin}
+          onClick={(e) => {
+            setCurrent(e.key);
+            if (e.key === "dashboard") {
+              navigate("/dashboard");
+            } else if (e.key === "logout") {
+              signOut();
+            }
+          }}
+        />
+      ) : (
+        <Menu
+          items={itemsAuthentications}
+          onClick={(e) => {
+            setCurrent(e.key);
+            if (e.key === "login") {
+              navigate("/login");
+            } else if (e.key === "reg") {
+              navigate("/registration");
+            }
+          }}
+        />
+      )}
+    </>
   );
 
   return (
