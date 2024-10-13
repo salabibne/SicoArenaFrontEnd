@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/charts": "^2.2.1",
     "@ant-design/icons": "^5.4.0",
     "antd": "^5.19.3",
     "axios": "^1.7.7",
@@ -17,6 +18,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.25.1",
+    "recharts": "^2.13.0",
     "swiper": "^11.1.9",
     "zustand": "^4.5.5"
   },

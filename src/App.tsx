@@ -1,12 +1,13 @@
-import TopMenu from "./layout/TopMenu"
+import { Outlet } from "react-router-dom";
+import TopMenu from "./layout/TopMenu";
 
 function App() {
-  
   return (
     <>
-     <TopMenu></TopMenu>
+      <TopMenu></TopMenu>
+      <Outlet />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
