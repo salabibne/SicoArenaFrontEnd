@@ -9,6 +9,7 @@ import {
 import { Menu, Layout } from "antd";
 import type { MenuProps } from "antd";
 import logo from "../../public/logo/image.png";
+import { useNavigate } from "react-router-dom";
 
 const { Sider } = Layout;
 
@@ -56,8 +57,12 @@ const items: MenuProps["items"] = [
 ];
 
 const SideMenu: React.FC = () => {
+  const navigate = useNavigate();
   const onClick: MenuProps["onClick"] = (e) => {
     console.log("click ", e);
+    if (e.key === "2") {
+      navigate("/admin/services");
+    }
   };
 
   return (
