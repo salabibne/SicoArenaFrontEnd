@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Flex, Form, Input, Radio, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import parsePersonPrice from "../../../Utils/ParsePersonPrice";
+import { convertList } from "../../../Utils/ConvertList";
 
 // Component for handling radio groups with an option to add custom values
 const CustomRadioInput = ({ label, options, inputValue, setInputValue }) => {
@@ -142,12 +143,15 @@ const AddServiceForm: React.FC = () => {
   const [selectedStatus, setSelectedStatus] = useState<string>("Active");
 
   const onFinish = (values: any) => {
+    const convertedPersonPrice = convertList(selectedPersonPrice);
+    const convertedTime = convertList(selectedTime);
+    const convertedPlace = convertList(selectedPlace);
     console.log("Form Submission:", {
       inputValue,
       selectedPerson,
-      selectedPersonPrice,
-      selectedTime,
-      selectedPlace,
+      convertedPersonPrice,
+      convertedTime,
+      convertedPlace,
       selectedStatus,
     });
   };
