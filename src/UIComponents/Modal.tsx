@@ -35,6 +35,12 @@ const ShowPopUp: React.FC<ShowPopUpProps> = ({
       {error && flag === "login" && (
         <p className="text-red-500">Error logging in user. Error: {error}</p>
       )}
+      {success && flag === "sportsCreated" && (
+        <p className="text-green-500">Sports Service Created Successfully</p>
+      )}
+      {error && flag === "sportsCreated" && (
+        <p className="text-red-500">Sports Service Creation Failed</p>
+      )}
     </Modal>
   );
 };

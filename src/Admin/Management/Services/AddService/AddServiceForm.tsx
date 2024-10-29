@@ -3,6 +3,8 @@ import { Button, Flex, Form, Input, Radio, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import parsePersonPrice from "../../../Utils/ParsePersonPrice";
 import { convertList } from "../../../Utils/ConvertList";
+import axios from "axios";
+import ShowPopUp from "../../../../UIComponents/Modal";
 
 // Component for handling radio groups with an option to add custom values
 const CustomRadioInput = ({ label, options, inputValue, setInputValue }) => {
@@ -142,18 +144,50 @@ const AddServiceForm: React.FC = () => {
   const [statusOptions] = useState(["Active", "Inactive"]);
   const [selectedStatus, setSelectedStatus] = useState<string>("Active");
 
-  const onFinish = (values: any) => {
-    const convertedPersonPrice = convertList(selectedPersonPrice);
-    const convertedTime = convertList(selectedTime);
-    const convertedPlace = convertList(selectedPlace);
-    console.log("Form Submission:", {
+  // show modal
+  const [success, setSuccess] = useState<boolean | undefined>(undefined);
+  const [error, setError] = useState<string | undefined>(undefined);
+  const [flag, setFlag] = useState<string | undefined>(undefined);
+
+  const onFinish = async (values: any) => {
+    const personPrice = convertList(selectedPersonPrice);
+    const time = convertList(selectedTime);
+    const place = convertList(selectedPlace);
+    const person = selectedPerson;
+    const status = selectedStatus;
+
+    const formSubmission = {
       inputValue,
-      selectedPerson,
-      convertedPersonPrice,
-      convertedTime,
-      convertedPlace,
-      selectedStatus,
-    });
+      person,
+      personPrice,
+      time,
+      place,
+      status,
+    };
+    console.log("Form Submission:", formSubmission);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/sports-service",
+        formSubmission
+      );
+      console.log("Successful Response", response);
+      if (response.statusText == "Created") {
+        setSuccess(true); // Show success message
+        setError(undefined); // Clear any previous error
+        setFlag("sportsCreated");
+      }
+    } catch (error) {
+      console.log("Error Response", error);
+      setSuccess(false); // Show error message
+      setError(` ${error}`);
+      setFlag("sportsCreated");
+    }
+  };
+
+  const closeModal = () => {
+    setSuccess(undefined);
+    setError(undefined);
   };
 
   return (
@@ -228,6 +262,15 @@ const AddServiceForm: React.FC = () => {
           </div>
         </Form.Item>
       </Form>
+      {success !== undefined && (
+        <ShowPopUp
+          visible={true}
+          success={success}
+          error={error}
+          onClose={closeModal} // Close modal by resetting state
+          flag={flag}
+        />
+      )}
     </div>
   );
 };
