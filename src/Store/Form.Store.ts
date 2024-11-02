@@ -1,5 +1,8 @@
 import axios from "axios";
 import { create } from "zustand";
+import flatTs from "../HelperFunctions/FlatObject";
+import flatObject from "../HelperFunctions/FlatObject";
+import flatObjects from "../HelperFunctions/FlatObject";
 export const useBookingFormStore = create((set) => ({
   bookingData: {
     sportsAndPerson: {},
@@ -35,6 +38,8 @@ export const useBookingFormStore = create((set) => ({
         updateState.bookingData.personalInformation
       );
       console.log("Full : ", updateState.bookingData);
+      const flatObjectOfData = flatObjects(updateState.bookingData);
+      console.log("Flat Object", flatObjectOfData);
       try {
         const response = await axios.post(
           "http://localhost:3000/form",

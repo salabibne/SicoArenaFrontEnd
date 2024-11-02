@@ -13,12 +13,17 @@ const disableDate = (current: any) => {
 };
 
 const DateTime: React.FC = () => {
+  // Date Format
+  const dateFormat = "YYYY/MM/DD";
   const updateDateAndTime = useBookingFormStore(
     (state) => state.updateDateAndTime
   );
   const onFinish = (values: any) => {
-    console.log(values);
-    updateDateAndTime(values);
+    const formattedDate = values.date ? values.date.format(dateFormat) : null;
+    const updatedValues = { ...values, date: formattedDate };
+
+    console.log(updatedValues);
+    updateDateAndTime(updatedValues);
   };
   return (
     <div className=" border-r-2 border-t-2 border-b-2 rounded-e-3xl p-6 min-h-64  border-blue-300">
@@ -36,7 +41,7 @@ const DateTime: React.FC = () => {
       >
         <div className="flex">
           <Form.Item name="date" label="Date" rules={[{ required: true }]}>
-            <DatePicker disabledDate={disableDate} />
+            <DatePicker format={dateFormat} disabledDate={disableDate} />
           </Form.Item>
           <Form.Item name="time" label="Time" rules={[{ required: true }]}>
             <Select placeholder="Select Time" allowClear>
