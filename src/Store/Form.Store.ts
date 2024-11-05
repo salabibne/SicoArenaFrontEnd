@@ -43,7 +43,7 @@ export const useBookingFormStore = create((set) => ({
       try {
         const response = await axios.post(
           "http://localhost:3000/form",
-          updateState.bookingData
+          flatObjectOfData
         );
 
         console.log("response", response);

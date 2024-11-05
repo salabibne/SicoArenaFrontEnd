@@ -53,7 +53,8 @@ const useAuthStore = create((set) => ({
         email,
         password
       );
-      set({ user: userCredential.user, loading: false, error: null });
+      // set({ user: userCredential.user, loading: false, error: null });
+      set({ user: userCredential, loading: false, error: null });
     } catch (error: unknown) {
       if (error instanceof Error) {
         set({ error: error.message, loading: false });

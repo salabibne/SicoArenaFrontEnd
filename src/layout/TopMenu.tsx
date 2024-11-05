@@ -96,6 +96,7 @@ const TopMenu: React.FC = () => {
 
   const { user } = useAuthStore();
   // console.log("user exist", user);
+  // console.log("user exist", user?.user?.email);
   const { signOut } = useAuthStore();
 
   const onClick: MenuProps["onClick"] = (e) => {

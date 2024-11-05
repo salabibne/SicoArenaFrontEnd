@@ -2,6 +2,8 @@ import React from "react";
 import { Button, DatePicker, Form, Select, Space } from "antd";
 import { Option } from "antd/es/mentions";
 import { useBookingFormStore } from "../Store/Form.Store";
+import { useFetchSportsDataForStore } from "../Store/FetchSportsData";
+import LoopItem from "../HelperFunctions/LoopItem";
 
 // const onFinish = (values: any) => {
 //   console.log("Success:", values);
@@ -13,6 +15,9 @@ const disableDate = (current: any) => {
 };
 
 const DateTime: React.FC = () => {
+  // Fetch Data By useFetchSportsDataForStore
+  const { sportsData, updateSportsData } = useFetchSportsDataForStore();
+
   // Date Format
   const dateFormat = "YYYY/MM/DD";
   const updateDateAndTime = useBookingFormStore(
@@ -32,9 +37,9 @@ const DateTime: React.FC = () => {
     </h1> */}
       <Form
         name="basic"
-        labelCol={{ span: 12 }}
-        wrapperCol={{ span: 16 }}
-        style={{ maxWidth: 600 }}
+        labelCol={{ span: 10 }}
+        wrapperCol={{ span: 14 }}
+        style={{ maxWidth: 800 }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
         autoComplete="off"
@@ -44,16 +49,30 @@ const DateTime: React.FC = () => {
             <DatePicker format={dateFormat} disabledDate={disableDate} />
           </Form.Item>
           <Form.Item name="time" label="Time" rules={[{ required: true }]}>
-            <Select placeholder="Select Time" allowClear>
+            {sportsData.map((item) => (
+              <Select placeholder="Select Time" allowClear>
+                {LoopItem(item.time).map((option, index) => (
+                  <Option key={index} value={option.value}>
+                    {option.label}
+                  </Option>
+                ))}
+              </Select>
+            ))}
+            {/* <Select placeholder="Select Time" allowClear>
               <Option value="46p">4Pm to 6Pm</Option>
               <Option value="122p">12Pm to 2Pm</Option>
-            </Select>
+            </Select> */}
           </Form.Item>
           <Form.Item name="place" label="Place" rules={[{ required: true }]}>
-            <Select placeholder="Select Place" allowClear>
-              <Option value="Ground">Ground</Option>
-              <Option value="Roof">RoofTop</Option>
-            </Select>
+            {sportsData.map((item) => (
+              <Select placeholder="Select Time" allowClear>
+                {LoopItem(item.place).map((option, index) => (
+                  <Option key={index} value={option.value}>
+                    {option.label}
+                  </Option>
+                ))}
+              </Select>
+            ))}
           </Form.Item>
         </div>
         <Form.Item>

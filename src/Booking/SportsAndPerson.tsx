@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Form, Input, Select, Space } from "antd";
 import { useBookingFormStore } from "../Store/Form.Store";
+import axios from "axios";
+import { useFetchSportsDataForStore } from "../Store/FetchSportsData";
+import parsePersonPrice from "../Admin/Utils/ParsePersonPrice";
+import LoopPersonPrice from "../HelperFunctions/LoopPersonPrice";
 
 const { Option } = Select;
 
@@ -15,10 +19,29 @@ const tailLayout = {
 
 const SportsAndPerson: React.FC = () => {
   const [form] = Form.useForm();
+  const { sportsData, updateSportsData } = useFetchSportsDataForStore();
 
   const updateSportsAndPerson = useBookingFormStore(
     (state) => state.updateSportsAndPerson
   );
+
+  const onSportsCategorySelect = async (value: string) => {
+    // console.log("onsportsCategorySelect", value);
+    try {
+      const sportsCategoryFetching = await axios.get(
+        `http://localhost:3000/sports-service/${value}`
+      );
+      console.log("sportsCategoryFetching", sportsCategoryFetching.data);
+      // useFetchSportsDataForStore.updateSportsData(sportsCategoryFetching.data);
+      updateSportsData(sportsCategoryFetching.data);
+    } catch (error) {
+      console.log("sportsCetogiryFetch", error);
+    }
+  };
+  useEffect(() => {
+    console.log("Updated sportsData in store:", sportsData);
+  }, [sportsData]);
+
   const onFinish = (values: any) => {
     console.log(values);
     updateSportsAndPerson(values);
@@ -44,16 +67,26 @@ const SportsAndPerson: React.FC = () => {
           label="Sports"
           rules={[{ required: true }]}
         >
-          <Select placeholder="Select Sports Category" allowClear>
+          <Select
+            placeholder="Select Sports Category"
+            allowClear
+            onChange={onSportsCategorySelect}
+          >
             <Option value="Cricket">Cricket</Option>
             <Option value="Football">Football</Option>
           </Select>
         </Form.Item>
         <Form.Item name="person" label="Person" rules={[{ required: true }]}>
-          <Select placeholder="Choose Person" allowClear>
-            <Option value="14">14</Option>
-            <Option value="16">16</Option>
-          </Select>
+          {sportsData.map((item) => (
+            <Select placeholder="Choose Person" allowClear>
+              console.log({item.personPrice});
+              {LoopPersonPrice(item.personPrice).map((option, index) => (
+                <Option key={index} value={option.value}>
+                  {option.label}
+                </Option>
+              ))}
+            </Select>
+          ))}
         </Form.Item>
 
         <Form.Item {...tailLayout}>
