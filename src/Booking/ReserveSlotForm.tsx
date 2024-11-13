@@ -3,6 +3,7 @@ import SportsAndPerson from "./SportsAndPerson";
 import DateTime from "./DateTime";
 import PersonalInformation from "./PersonalInformation";
 import TimeLine from "./TimeLine";
+import OrderSummary from "./BookingSummery";
 
 const ReserveSlotForm: React.FC = () => {
   const [step, setStep] = useState(1);
@@ -18,7 +19,7 @@ const ReserveSlotForm: React.FC = () => {
         <h1 className={getStepClass(1)}>1. Sports and Person</h1>
         <h1 className={getStepClass(2)}>2. Date And Time</h1>
         <h1 className={getStepClass(3)}>3. Personal Information</h1>
-        <h1>4. Payment</h1>
+        <h1 className={getStepClass(4)}>4. Payment</h1>
       </div>
       <div className="mt-6 w-1/2  mr-14">
         <h1 className="text-center mb-4 text-3xl font-semibold">
@@ -28,6 +29,7 @@ const ReserveSlotForm: React.FC = () => {
         {step === 1 && <SportsAndPerson></SportsAndPerson>}
         {step === 2 && <DateTime></DateTime>}
         {step === 3 && <PersonalInformation></PersonalInformation>}
+        {step === 4 && <OrderSummary></OrderSummary>}
         {
           <div className="space-x-6 mt-4 flex items-center justify-center">
             {step > 1 && (
@@ -38,7 +40,7 @@ const ReserveSlotForm: React.FC = () => {
                 Back
               </button>
             )}
-            {step < 3 && (
+            {step < 4 && (
               <button
                 className="px-4 py-2 border rounded-md bg-black text-white"
                 onClick={nextStep}
@@ -46,9 +48,9 @@ const ReserveSlotForm: React.FC = () => {
                 Next
               </button>
             )}
-            {step == 3 && (
+            {step == 4 && (
               <button className="px-4 py-2 border rounded-md bg-green-600 text-white">
-                Finish
+                Payment
               </button>
             )}
           </div>

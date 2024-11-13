@@ -8,6 +8,7 @@ export const useBookingFormStore = create((set) => ({
     sportsAndPerson: {},
     dateAndtime: {},
     personalInformation: {},
+    paymentInformation: {},
   },
   updateSportsAndPerson: (sp) =>
     set((state) => {
@@ -28,8 +29,9 @@ export const useBookingFormStore = create((set) => ({
       console.log("Updated DateTime: ", updateState.bookingData.dateAndtime);
       return updateState;
     }),
+
   updatePersonalInformation: (pi) =>
-    set(async (state) => {
+    set((state) => {
       const updateState = {
         bookingData: { ...state.bookingData, personalInformation: pi },
       };
@@ -37,22 +39,38 @@ export const useBookingFormStore = create((set) => ({
         "Updated Personal Information: ",
         updateState.bookingData.personalInformation
       );
+
+      return updateState;
+    }),
+
+  updatePayment: (pt) =>
+    set(async (state) => {
+      const updateState = {
+        bookingData: {
+          ...state.bookingData,
+          paymentInformation: pt,
+        },
+      };
+      console.log(
+        "Updated Payment Information",
+        updateState.bookingData.paymentInformation
+      );
       console.log("Full : ", updateState.bookingData);
       const flatObjectOfData = flatObjects(updateState.bookingData);
       console.log("Flat Object", flatObjectOfData);
-      try {
-        const response = await axios.post(
-          "http://localhost:3000/form",
-          flatObjectOfData
-        );
+      // try {
+      //   const response = await axios.post(
+      //     "http://localhost:3000/form",
+      //     flatObjectOfData
+      //   );
 
-        console.log("response", response);
-        if (response.statusText == "Created") {
-          alert("Your slot has been booked");
-        }
-      } catch (error) {
-        console.log("error", error);
-      }
+      //   console.log("response", response);
+      //   if (response.statusText == "Created") {
+      //     alert("Your slot has been booked");
+      //   }
+      // } catch (error) {
+      //   console.log("error", error);
+      // }
       return updateState;
     }),
 }));
