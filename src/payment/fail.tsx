@@ -14,10 +14,10 @@ const FailPage = () => {
         extra={
           <Button
             type="primary"
-            onClick={() => navigate("/checkout")}
+            onClick={() => navigate("/booking")}
             className="bg-red-600 hover:bg-red-700"
           >
-            Retry Payment
+            Retry Booking
           </Button>
         }
       />

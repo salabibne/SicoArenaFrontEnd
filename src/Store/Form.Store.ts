@@ -55,22 +55,22 @@ export const useBookingFormStore = create((set) => ({
         "Updated Payment Information",
         updateState.bookingData.paymentInformation
       );
-      console.log("Full : ", updateState.bookingData);
+      // console.log("Full : ", updateState.bookingData);
       const flatObjectOfData = flatObjects(updateState.bookingData);
       console.log("Flat Object", flatObjectOfData);
-      // try {
-      //   const response = await axios.post(
-      //     "http://localhost:3000/form",
-      //     flatObjectOfData
-      //   );
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/form",
+          flatObjectOfData
+        );
 
-      //   console.log("response", response);
-      //   if (response.statusText == "Created") {
-      //     alert("Your slot has been booked");
-      //   }
-      // } catch (error) {
-      //   console.log("error", error);
-      // }
+        console.log("response", response);
+        // if (response.statusText == "Created") {
+        //   alert("Your slot has been booked");
+        // }
+      } catch (error) {
+        console.log("error", error);
+      }
       return updateState;
     }),
 }));

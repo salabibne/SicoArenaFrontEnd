@@ -48,11 +48,6 @@ const ReserveSlotForm: React.FC = () => {
                 Next
               </button>
             )}
-            {step == 4 && (
-              <button className="px-4 py-2 border rounded-md bg-green-600 text-white">
-                Payment
-              </button>
-            )}
           </div>
         }
       </div>

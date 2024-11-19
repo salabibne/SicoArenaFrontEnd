@@ -5,6 +5,9 @@ import axios from "axios";
 
 const OrderSummary = () => {
   const storeUpdate = useBookingFormStore();
+  const updatePaymentInformation = useBookingFormStore(
+    (state) => state.updatePayment
+  );
   // console.log(storeUpdate.booking);
   console.log(storeUpdate);
   const orderDetails = {
@@ -16,14 +19,14 @@ const OrderSummary = () => {
     name: storeUpdate?.bookingData?.personalInformation?.name,
     email: storeUpdate?.bookingData?.personalInformation?.email,
     pn: storeUpdate?.bookingData?.personalInformation?.pn,
-    price: storeUpdate?.bookingData?.sportsAndPerson?.person.split("-")[1], // Example price field
+    price: storeUpdate?.bookingData?.sportsAndPerson?.person.split("-")[1],
   };
 
   const generateTransactionId = () => {
     const timeStamp = new Date().toISOString().replace(/[-:.TZ]/g, "");
+    const randomNum = Math.random().toFixed(4).substring(2);
     const personInfo = orderDetails.person;
-    const sports = orderDetails.sportsCategory;
-    const transactionId = `${timeStamp}${personInfo}${sports}`;
+    const transactionId = `${timeStamp}${personInfo}${randomNum}`;
     return transactionId;
   };
 
@@ -36,7 +39,10 @@ const OrderSummary = () => {
       customerPhone: orderDetails.pn,
       productName: orderDetails.sportsCategory,
     };
-
+    updatePaymentInformation({
+      transactionId: payment.tranId,
+      status: "Pending",
+    });
     try {
       const sslResponse = await axios.post(
         "http://localhost:3000/payment/initiate",
@@ -44,13 +50,14 @@ const OrderSummary = () => {
       );
       console.log("SSL Response", sslResponse.data);
       window.location.replace(sslResponse.data.paymentUrl);
+      console.log(payment);
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className="flex justify-center items-center  border-2 ml-2 rounded-e-3xl p-4 min-h-64 border-blue-400">
+    <div className="flex justify-center items-center  border-2 ml-2 rounded-e-3xl p-4 min-h-72 border-blue-400">
       <Card
         title="Booking Summary"
         className="max-w-md w-full shadow-lg rounded-lg"
@@ -101,14 +108,15 @@ const OrderSummary = () => {
 
           <div className="flex justify-between">
             <span className="font-semibold">Price:</span>
-            <span className="text-red-600 font-bold">{orderDetails.price}</span>
+            <span className=" font-bold mb-4">{orderDetails.price} BDT</span>
           </div>
           <Button
-            type="primary"
+            //
+
             onClick={paymentDetails}
-            className="mt-8 w-full max-w-md"
+            className="mt-14 w-full max-w-md bg-[#01030b] text-white font-bold"
           >
-            Submit Payment
+            Payment
           </Button>
         </div>
       </Card>
