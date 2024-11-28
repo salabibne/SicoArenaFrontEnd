@@ -2,21 +2,19 @@ import { Button, message, Popconfirm, Table, Tag } from "antd";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import parsePersonPrice from "../../Utils/ParsePersonPrice";
 
-const Services = () => {
-  const handleDeactivate = async (record) => {
-    console.log("Record", record._id);
+const BookingsTable = () => {
+  const handleTerminate = async (record) => {
+    // console.log("Record", record._id);
     try {
       const response = await axios.patch(
-        `http://localhost:3000/sports-service/deactivate/${record._id}`
+        `http://localhost:3000/form/terminate/${record._id}`
       );
       if (response.status === 200) {
-        message.success("This service is deactivated .");
+        message.success("Status updated to TERMINATED.");
         setDatas((prevData: any[]) =>
           prevData.map((item) =>
-            item._id === record._id ? { ...item, status: ["Deactivate"] } : item
+            item._id === record._id ? { ...item, status: "TERMINATED" } : item
           )
         );
       }
@@ -32,12 +30,12 @@ const Services = () => {
           style={{ color: "rgb(43, 54, 116)" }}
           className="font-custom font-extrabold"
         >
-          Sports Name
+          Sports
         </span>
       ),
 
-      dataIndex: "inputValue",
-      key: "inputValue",
+      dataIndex: "sportsCategory",
+      key: "sportsCategory",
     },
     {
       title: (
@@ -45,7 +43,7 @@ const Services = () => {
           style={{ color: "rgb(43, 54, 116)" }}
           className="font-custom font-extrabold"
         >
-          Person
+          Person-Price
         </span>
       ),
       dataIndex: "person",
@@ -57,26 +55,11 @@ const Services = () => {
           style={{ color: "rgb(43, 54, 116)" }}
           className="font-custom font-extrabold"
         >
-          Person-Price
+          Date
         </span>
       ),
-      dataIndex: "personPrice",
-      key: "personPrice",
-      // render: (personPrice) => parsePersonPrice(personPrice.join(",")),
-      render: (personPrice) => personPrice.join(","),
-    },
-    {
-      title: (
-        <span
-          style={{ color: "rgb(43, 54, 116)" }}
-          className="font-custom font-extrabold"
-        >
-          Place
-        </span>
-      ),
-      dataIndex: "place",
-      key: "place",
-      render: (place) => place.join(","),
+      dataIndex: "date",
+      key: "date",
     },
     {
       title: (
@@ -89,7 +72,54 @@ const Services = () => {
       ),
       dataIndex: "time",
       key: "time",
-      render: (time) => time.join(","),
+    },
+    {
+      title: (
+        <span
+          style={{ color: "rgb(43, 54, 116)" }}
+          className="font-custom font-extrabold"
+        >
+          Place
+        </span>
+      ),
+      dataIndex: "place",
+      key: "place",
+    },
+    {
+      title: (
+        <span
+          style={{ color: "rgb(43, 54, 116)" }}
+          className="font-custom font-extrabold"
+        >
+          Customer Email
+        </span>
+      ),
+      dataIndex: "email",
+      key: "email",
+    },
+    //  {
+    //    title: (
+    //      <span
+    //        style={{ color: "rgb(43, 54, 116)" }}
+    //        className="font-custom font-extrabold"
+    //      >
+    //        Customer Phone
+    //      </span>
+    //    ),
+    //    dataIndex: "pn",
+    //    key: "pn",
+    //  },
+    {
+      title: (
+        <span
+          style={{ color: "rgb(43, 54, 116)" }}
+          className="font-custom font-extrabold"
+        >
+          Tran.Id
+        </span>
+      ),
+      dataIndex: "transactionId",
+      key: "transactionId",
     },
 
     {
@@ -106,17 +136,20 @@ const Services = () => {
       render: (status) => (
         <Tag
           color={
-            status[0] === "Active"
+            status === "VALID"
               ? "green"
-              : status[0] === "Deactivate"
+              : status === "CANCELLED"
+              ? "red"
+              : status === "TERMINATED"
               ? "gray"
-              : "red"
+              : "yellow"
           }
         >
-          {status[0]}
+          {status}
         </Tag>
       ),
     },
+
     {
       title: (
         <span
@@ -129,13 +162,13 @@ const Services = () => {
       key: "action",
       render: (_, record) => (
         <Popconfirm
-          title="Are you sure you want to deactivate this service?"
-          onConfirm={() => handleDeactivate(record)}
+          title="Are you sure you want to terminate this booking?"
+          onConfirm={() => handleTerminate(record)}
           okText="Yes"
           cancelText="No"
         >
-          {record.status[0] === "Active" && (
-            <Button className="text-red-500">Deactivate</Button>
+          {record.status === "VALID" && (
+            <Button className="text-red-500">Terminate</Button>
           )}
           {/* //  <Button className="text-red-500">Terminate</Button> */}
         </Popconfirm>
@@ -148,46 +181,24 @@ const Services = () => {
   const [datas, setDatas] = useState([]);
 
   useEffect(() => {
-    const fetchServices = async () => {
+    const fetchUsers = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/sports-service/admin"
-        );
+        const response = await axios.get("http://localhost:3000/form");
 
-        // const formattedData = response.data.map((item) => ({
-        //   ...item,
-        //   personPrice: item.personPrice[0] || "",
-        //   place: item.place[0] || "",
-        //   time: item.time[0] || "",
-        //   status: item.status[0] || "",
-        // }));
-
-        // setDatas(formattedData);
         setDatas(response.data);
       } catch (error) {
         console.error("Error fetching services:", error);
       }
     };
 
-    fetchServices();
+    fetchUsers();
   }, []);
 
   // const data = [];
   console.log("datas", datas);
 
   return (
-    <div className="p-6">
-      {/* Add Service Button */}
-      <div className="flex justify-end mb-4">
-        <Button
-          type="primary"
-          style={{ backgroundColor: "#17295A", borderColor: "#17295A" }}
-          className="text-white"
-        >
-          <Link to="/admin/services/add">Add Service</Link>
-        </Button>
-      </div>
-
+    <div className="max-w-full mx-auto">
       {/* Services Table */}
       <Table
         columns={columns}
@@ -198,4 +209,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default BookingsTable;

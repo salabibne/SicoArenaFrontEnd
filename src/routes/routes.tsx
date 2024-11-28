@@ -14,6 +14,8 @@ import OrderSummary from "../Booking/BookingSummery";
 import SuccessPage from "../payment/success";
 import CancelPage from "../payment/cancel";
 import FailPage from "../payment/fail";
+import UsersTable from "../Admin/Management/Users/UsersTable";
+import BookingsTable from "../Admin/Management/Bookings/BookingsTable";
 
 const routes = () => {
   return (
@@ -40,6 +42,8 @@ const routes = () => {
           <Route path="/admin/services" element={<Services />} />
           <Route path="/admin/services/add" element={<AddServiceForm />} />
           <Route path="/admin/services/manage" element={<ServicesTable />} />
+          <Route path="/admin/users" element={<UsersTable />} />
+          <Route path="/admin/booking" element={<BookingsTable />} />
         </Route>
       </Routes>
     </BrowserRouter>

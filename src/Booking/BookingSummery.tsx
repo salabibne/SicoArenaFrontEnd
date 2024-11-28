@@ -13,9 +13,9 @@ const OrderSummary = () => {
   const orderDetails = {
     sportsCategory: storeUpdate?.bookingData?.sportsAndPerson?.sportsCategory,
     person: storeUpdate?.bookingData?.sportsAndPerson?.person.split("-")[0],
-    date: storeUpdate?.bookingData?.dateAndtime?.date,
-    time: storeUpdate?.bookingData?.dateAndtime?.time,
-    place: storeUpdate?.bookingData?.dateAndtime?.place,
+    date: storeUpdate?.bookingData?.date?.date,
+    time: storeUpdate?.bookingData?.time?.time,
+    place: storeUpdate?.bookingData?.time?.place,
     name: storeUpdate?.bookingData?.personalInformation?.name,
     email: storeUpdate?.bookingData?.personalInformation?.email,
     pn: storeUpdate?.bookingData?.personalInformation?.pn,

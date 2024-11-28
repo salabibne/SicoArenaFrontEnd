@@ -6,7 +6,8 @@ import flatObjects from "../HelperFunctions/FlatObject";
 export const useBookingFormStore = create((set) => ({
   bookingData: {
     sportsAndPerson: {},
-    dateAndtime: {},
+    date: {},
+    time: {},
     personalInformation: {},
     paymentInformation: {},
   },
@@ -21,12 +22,20 @@ export const useBookingFormStore = create((set) => ({
       );
       return updatedState;
     }),
-  updateDateAndTime: (dt) =>
+  updateDate: (dt) =>
     set((state) => {
       const updateState = {
-        bookingData: { ...state.bookingData, dateAndtime: dt },
+        bookingData: { ...state.bookingData, date: dt },
       };
-      console.log("Updated DateTime: ", updateState.bookingData.dateAndtime);
+      console.log("Updated DateTime: ", updateState.bookingData.date);
+      return updateState;
+    }),
+  updateTime: (dt) =>
+    set((state) => {
+      const updateState = {
+        bookingData: { ...state.bookingData, time: dt },
+      };
+      console.log("Updated DateTime: ", updateState.bookingData.time);
       return updateState;
     }),
 

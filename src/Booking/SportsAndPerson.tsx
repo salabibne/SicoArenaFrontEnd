@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Button, Form, Input, Select, Space } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, DatePicker, Form, Input, Select, Space } from "antd";
 import { useBookingFormStore } from "../Store/Form.Store";
 import axios from "axios";
 import { useFetchSportsDataForStore } from "../Store/FetchSportsData";
@@ -17,33 +17,93 @@ const tailLayout = {
   wrapperCol: { offset: 9, span: 16 },
 };
 
+const disableDate = (current: any) => {
+  const today = new Date();
+  return current && current < today.setHours(0, 0, 0, 0);
+};
+
 const SportsAndPerson: React.FC = () => {
   const [form] = Form.useForm();
   const { sportsData, updateSportsData } = useFetchSportsDataForStore();
+  const [activeSports, setActiveSports] = useState([]);
+  const [selectedSport, setSelectedSport] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+
+  useEffect(() => {
+    const fetchActiveSports = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/sports-service"
+        );
+        setActiveSports(response.data);
+        console.log("Fetched Active Sports:", response.data);
+      } catch (error) {
+        alert(error);
+        console.error("Error fetching active sports:", error);
+      }
+    };
+
+    fetchActiveSports();
+  }, []);
+
+  const dateFormat = "YYYY/MM/DD";
+  const updatedDate = useBookingFormStore((state) => state.updateDate);
 
   const updateSportsAndPerson = useBookingFormStore(
     (state) => state.updateSportsAndPerson
   );
 
-  const onSportsCategorySelect = async (value: string) => {
-    // console.log("onsportsCategorySelect", value);
-    try {
-      const sportsCategoryFetching = await axios.get(
-        `http://localhost:3000/sports-service/${value}`
-      );
-      console.log("sportsCategoryFetching", sportsCategoryFetching.data);
-      // useFetchSportsDataForStore.updateSportsData(sportsCategoryFetching.data);
-      updateSportsData(sportsCategoryFetching.data);
-    } catch (error) {
-      console.log("sportsCetogiryFetch", error);
-    }
+  // select the Sports
+  const handleSelectSport = (value: any) => {
+    setSelectedSport(value);
   };
+  const handleSelectDate = (date: any, dateString: string) => {
+    setSelectedDate(dateString);
+  };
+
   useEffect(() => {
-    console.log("Updated sportsData in store:", sportsData);
-  }, [sportsData]);
+    const fetchSportsData = async () => {
+      if (selectedSport && selectedDate) {
+        const url = `http://localhost:3000/sports-service/${selectedSport}/${selectedDate}`;
+        console.log("url", url);
+        try {
+          const response = await axios.get(url);
+          console.log("Fetched Sports Data:", response.data);
+          updateSportsData(response.data);
+        } catch (error) {
+          console.error("Error fetching sports data:", error);
+          alert("Failed to fetch sports data. Please try again.");
+        }
+      }
+    };
+
+    fetchSportsData();
+  }, [selectedDate, selectedSport, updateSportsData]);
+
+  // const onSportsCategorySelect = async () => {
+  //   // console.log("onsportsCategorySelect", value);
+  //   try {
+  //     const response = value;
+  //     const sportsCategoryFetching = await axios.get(
+  //       `http://localhost:3000/sports-service/${value}`
+  //     );
+  //     console.log("sportsCategoryFetching", sportsCategoryFetching.data);
+  //     // useFetchSportsDataForStore.updateSportsData(sportsCategoryFetching.data);
+  //     updateSportsData(sportsCategoryFetching.data);
+  //   } catch (error) {
+  //     alert(error.message);
+  //     console.log("sportsCetogiryFetch", error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   console.log("Updated sportsData in store:", sportsData);
+  // }, [sportsData]);
 
   const onFinish = (values: any) => {
+    const formattedDate = values.date ? values.date.format(dateFormat) : null;
+    const updatedValues = { ...values, date: formattedDate };
     console.log(values);
+    updatedDate(updatedValues);
     updateSportsAndPerson(values);
   };
   const onReset = () => {
@@ -70,12 +130,26 @@ const SportsAndPerson: React.FC = () => {
           <Select
             placeholder="Select Sports Category"
             allowClear
-            onChange={onSportsCategorySelect}
+            onChange={handleSelectSport}
           >
-            <Option value="Cricket">Cricket</Option>
-            <Option value="Football">Football</Option>
+            {activeSports.map((sport) => (
+              <Option key={sport} value={sport}>
+                {sport}
+              </Option>
+            ))}
           </Select>
         </Form.Item>
+
+        <Form.Item name="date" label="Date" rules={[{ required: true }]}>
+          <DatePicker
+            onChange={(date: any, dateString: string) =>
+              handleSelectDate(date, dateString)
+            }
+            format={dateFormat}
+            disabledDate={disableDate}
+          />
+        </Form.Item>
+
         <Form.Item name="person" label="Person" rules={[{ required: true }]}>
           {sportsData.map((item) => (
             <Select placeholder="Choose Person" allowClear>

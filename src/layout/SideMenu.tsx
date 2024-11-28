@@ -60,8 +60,14 @@ const SideMenu: React.FC = () => {
   const navigate = useNavigate();
   const onClick: MenuProps["onClick"] = (e) => {
     console.log("click ", e);
+    if (e.key === "1") {
+      navigate("/admin/users");
+    }
     if (e.key === "2") {
       navigate("/admin/services");
+    }
+    if (e.key === "3") {
+      navigate("/admin/booking");
     }
   };
 
