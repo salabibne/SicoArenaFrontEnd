@@ -16,6 +16,7 @@ import CancelPage from "../payment/cancel";
 import FailPage from "../payment/fail";
 import UsersTable from "../Admin/Management/Users/UsersTable";
 import BookingsTable from "../Admin/Management/Bookings/BookingsTable";
+import RevenueSummary from "../Admin/Management/Revenue/RevenueTable";
 
 const routes = () => {
   return (
@@ -44,6 +45,7 @@ const routes = () => {
           <Route path="/admin/services/manage" element={<ServicesTable />} />
           <Route path="/admin/users" element={<UsersTable />} />
           <Route path="/admin/booking" element={<BookingsTable />} />
+          <Route path="/admin/revenue" element={<RevenueSummary />} />
         </Route>
       </Routes>
     </BrowserRouter>

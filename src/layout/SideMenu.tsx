@@ -69,6 +69,9 @@ const SideMenu: React.FC = () => {
     if (e.key === "3") {
       navigate("/admin/booking");
     }
+    if (e.key === "4") {
+      navigate("/admin/revenue");
+    }
   };
 
   return (
