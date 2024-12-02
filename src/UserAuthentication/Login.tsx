@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { GoogleOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Flex } from "antd";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import useAuthStore from "../Store/useAuthStore";
 import ShowPopUp from "../UIComponents/Modal";
 
 const Login: React.FC = () => {
   const loginForm = useAuthStore((state) => state.signIn);
+  const navigate = useNavigate();
 
   const [success, setSuccess] = useState<boolean | undefined>(undefined);
   const [error, setError] = useState<string | undefined>(undefined);
@@ -19,11 +20,14 @@ const Login: React.FC = () => {
         setSuccess(true);
         setError(undefined);
         setFlag("login");
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
       })
       .catch((err) => {
         setSuccess(false); // Show error message
         setError(` ${err}`); // Set error message
-        console.error("Error logging in user", err); // Log the error for debugging
+        console.error("Error logging in user", err);
       });
   };
 
@@ -31,6 +35,10 @@ const Login: React.FC = () => {
     setSuccess(undefined);
     setError(undefined);
   };
+
+  // if (success && flag === "login") {
+  //   return <Navigate to="/" replace />;
+  // }
 
   return (
     <div className="flex flex-col items-center justify-center mt-16">
@@ -90,13 +98,15 @@ const Login: React.FC = () => {
           </Form.Item>
         </Form>
         {success !== undefined && (
-          <ShowPopUp
-            visible={true}
-            success={success}
-            error={error}
-            onClose={closeModal} // Close modal by resetting state
-            flag={flag}
-          />
+          <>
+            <ShowPopUp
+              visible={true}
+              success={success}
+              error={error}
+              onClose={closeModal} // Close modal by resetting state
+              flag={flag}
+            />
+          </>
         )}
       </div>
     </div>
