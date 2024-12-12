@@ -119,27 +119,37 @@ const CustomMultipleOptionsInput = ({
 };
 
 const AddServiceForm: React.FC = () => {
-  const [sportsOptions] = useState(["Cricket", "Football"]);
-  const [inputValue, setInputValue] = useState("Cricket");
+  const [sportsOptions] = useState(["Football Unit 1 off-peak",
+    "Football Unit 1 peak","Football Unit 2 off-peak","Football Unit 2 peak"]);
+  const [inputValue, setInputValue] = useState("Football Unit 1 off-peak");
 
   const [personOptions] = useState([1, 2, 3]);
   const [selectedPerson, setSelectedPerson] = useState<number | string>(1);
 
-  const [personPriceOptions] = useState(["1-10", "11-20", "21-30"]);
+  const [personPriceOptions] = useState(["10-1000", "10-1350", "14-2500","14-3000"]);
   const [selectedPersonPrice, setSelectedPersonPrice] = useState<
     string | number
-  >("1-10");
+  >("10-1000");
 
   const [TimeOptions] = useState([
-    "9.30 AM",
-    "1:10 PM",
-    "11:20 AM",
-    "21:30 PM",
+    "12:00 AM",
+    "1:00 PM",
+    "2:00 PM",
+    "3:00 PM",
+    "4:00 PM",
+    "5:00 PM",
+    "6:00 PM",
+    "7:00 PM",
+    "8:00 PM",
+    "9:00 PM",
+    "10:00 PM",
+    "11:00 PM"
+    
   ]);
-  const [selectedTime, setSelectedTime] = useState<string>("9:30 PM");
+  const [selectedTime, setSelectedTime] = useState<string>("12:00 AM");
 
-  const [PlaceOptions] = useState(["A", "B", "C", "D"]);
-  const [selectedPlace, setSelectedPlace] = useState<string>("A");
+  const [PlaceOptions] = useState(["Ground", "Roof", "Ground1", "Roof1"]);
+  const [selectedPlace, setSelectedPlace] = useState<string>("Ground");
 
   const [statusOptions] = useState(["Active", "Inactive"]);
   const [selectedStatus, setSelectedStatus] = useState<string>("Active");
@@ -191,12 +201,12 @@ const AddServiceForm: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-8 bg-white shadow-md rounded-lg">
+    <div className="max-w-8xl mx-auto p-8 bg-white shadow-md rounded-lg">
       <h1 className="text-3xl font-bold mb-6 text-[#17295A]">
         Add Service Details
       </h1>
       <Form layout="vertical" onFinish={onFinish} className="space-y-6">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-36">
           {/* Sports Type Field */}
           <CustomRadioInput
             label="Sports"
@@ -205,13 +215,15 @@ const AddServiceForm: React.FC = () => {
             setInputValue={setInputValue}
           />
 
-          {/* Person Field */}
+       
           <CustomRadioInput
             label="Person"
             options={personOptions}
             inputValue={selectedPerson}
             setInputValue={setSelectedPerson}
           />
+
+
 
           {/* Person Price Field */}
           <CustomMultipleOptionsInput

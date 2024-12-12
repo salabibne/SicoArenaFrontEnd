@@ -24,6 +24,7 @@ const DateTime: React.FC = () => {
   const onFinish = (values: any) => {
     console.log(values);
     updatedTime(values);
+    alert("submitted")
   };
   return (
     <div className=" border-r-2 border-t-2 border-b-2 rounded-e-3xl p-6 min-h-64  border-blue-300">

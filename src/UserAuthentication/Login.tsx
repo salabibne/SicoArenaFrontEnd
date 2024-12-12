@@ -4,6 +4,7 @@ import { Button, Checkbox, Form, Input, Flex } from "antd";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import useAuthStore from "../Store/useAuthStore";
 import ShowPopUp from "../UIComponents/Modal";
+import CallUserData from "../HelperFunctions/FetchingUserDataCall";
 
 const Login: React.FC = () => {
   const loginForm = useAuthStore((state) => state.signIn);
@@ -35,10 +36,6 @@ const Login: React.FC = () => {
     setSuccess(undefined);
     setError(undefined);
   };
-
-  // if (success && flag === "login") {
-  //   return <Navigate to="/" replace />;
-  // }
 
   return (
     <div className="flex flex-col items-center justify-center mt-16">
@@ -87,12 +84,12 @@ const Login: React.FC = () => {
                 </p>
               </Link>
               <div className="border-t-2 mt-4 border-indigo-500 ...">
-                <h1 className="text-center mt-2 text-gray-500">
+                {/* <h1 className="text-center mt-2 text-gray-500">
                   or you can sign in with
-                </h1>
-                <button className="flex mt-4 mx-auto">
+                </h1> */}
+                {/* <button className="flex mt-4 mx-auto">
                   <GoogleOutlined className="text-2xl " />
-                </button>
+                </button> */}
               </div>
             </div>
           </Form.Item>

@@ -18,7 +18,8 @@ const PersonalInformation: React.FC = () => {
 
   // Retrive user information from google auth for useEmail. Later pass through userEmail in an api to get the full information of the user from database.
   const { user } = useAuthStore();
-  const userEmailId = user?.user?.email;
+  console.log("user personalInformation", user);
+  const userEmailId = user?.email;
   console.log(userEmailId);
 
   // const fetchUserInformation = async (value: string) => {
@@ -26,30 +27,18 @@ const PersonalInformation: React.FC = () => {
   //     const informationFetching = await axios.get(
   //       `http://localhost:3000/users/${value}`
   //     );
-  //     console.log(informationFetching);
+  //     console.log(informationFetching.data);
   //     updateUserData(informationFetching.data);
   //   } catch (error) {
-  //     console.log(error);
+  //     console.error(error); // Adjusted to use console.error for errors
   //   }
   // };
 
-  const fetchUserInformation = async (value: string) => {
-    try {
-      const informationFetching = await axios.get(
-        `http://localhost:3000/users/${value}`
-      );
-      console.log(informationFetching.data);
-      updateUserData(informationFetching.data);
-    } catch (error) {
-      console.error(error); // Adjusted to use console.error for errors
-    }
-  };
-
-  useEffect(() => {
-    if (user && userEmailId) {
-      fetchUserInformation(userEmailId); // Call the fetch function inside useEffect
-    }
-  }, [user, userEmailId]);
+  // useEffect(() => {
+  //   if (user && userEmailId) {
+  //     fetchUserInformation(userEmailId); // Call the fetch function inside useEffect
+  //   }
+  // }, [user, userEmailId]);
 
   useEffect(() => {
     console.log("Updated PersonData in store:", userDataAfterFetching);
@@ -58,6 +47,7 @@ const PersonalInformation: React.FC = () => {
   const onFinish = (values: any) => {
     console.log("Success:", values);
     updatePersonalInformation(values);
+    alert("submitted")
   };
   const initialValues =
     userDataAfterFetching.length > 0

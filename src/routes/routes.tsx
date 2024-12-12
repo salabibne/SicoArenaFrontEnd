@@ -17,6 +17,12 @@ import FailPage from "../payment/fail";
 import UsersTable from "../Admin/Management/Users/UsersTable";
 import BookingsTable from "../Admin/Management/Bookings/BookingsTable";
 import RevenueSummary from "../Admin/Management/Revenue/RevenueTable";
+import ProtectedRoute from "../ProtectComponent/ProtectComponent";
+import PersonBooking from "../UserDashboard/PersonBooking";
+import Servicepages from "../pages/Service.pages";
+import Contactpages from "../pages/Contact.pages";
+import AnnouncementPage from "../Admin/Announcement/Announcement";
+import AnnouncementClient from "../pages/Announcement.pages";
 
 const routes = () => {
   return (
@@ -25,10 +31,14 @@ const routes = () => {
         <Route element={<App />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<Aboutpages />} />
+          <Route path="/clientannounce" element={<AnnouncementClient />} />
+          <Route path="/service" element={<Servicepages />} />
+          <Route path="/contact" element={<Contactpages />} />
           <Route path="/booking" element={<Bookingpages />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/bookingsummery" element={<OrderSummary />} />
+          <Route path="/personBooking" element={<PersonBooking />} />
           {/* <Route path="/payment/success" element={<SuccessPage />} />
           <Route path="/payment/cancel" element={<CancelPage />} />
           <Route path="/payment/fail" element={<FailPage />} /> */}
@@ -38,14 +48,17 @@ const routes = () => {
         <Route path="/payment/cancel" element={<CancelPage />} />
         <Route path="/payment/fail" element={<FailPage />} />
 
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<AdminDashboard />} />
-          <Route path="/admin/services" element={<Services />} />
-          <Route path="/admin/services/add" element={<AddServiceForm />} />
-          <Route path="/admin/services/manage" element={<ServicesTable />} />
-          <Route path="/admin/users" element={<UsersTable />} />
-          <Route path="/admin/booking" element={<BookingsTable />} />
-          <Route path="/admin/revenue" element={<RevenueSummary />} />
+        <Route element={<ProtectedRoute requiredRole="admin" />}>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="/admin/services" element={<Services />} />
+            <Route path="/admin/services/add" element={<AddServiceForm />} />
+            <Route path="/admin/services/manage" element={<ServicesTable />} />
+            <Route path="/admin/users" element={<UsersTable />} />
+            <Route path="/admin/booking" element={<BookingsTable />} />
+            <Route path="/admin/revenue" element={<RevenueSummary />} />
+            <Route path="/admin/announcement" element={<AnnouncementPage />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

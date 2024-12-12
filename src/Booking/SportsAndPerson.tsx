@@ -105,6 +105,7 @@ const SportsAndPerson: React.FC = () => {
     console.log(values);
     updatedDate(updatedValues);
     updateSportsAndPerson(values);
+    alert("submitted")
   };
   const onReset = () => {
     form.resetFields();

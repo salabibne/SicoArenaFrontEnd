@@ -5,6 +5,7 @@ import {
   BookOutlined,
   DollarOutlined,
   LogoutOutlined,
+  SoundOutlined,
 } from "@ant-design/icons";
 import { Menu, Layout } from "antd";
 import type { MenuProps } from "antd";
@@ -50,7 +51,15 @@ const items: MenuProps["items"] = [
     key: "5",
     label: (
       <span>
-        <LogoutOutlined /> Logout
+        <SoundOutlined  /> Announcement
+      </span>
+    ),
+  },
+  {
+    key: "6",
+    label: (
+      <span>
+        <LogoutOutlined /> Go Back Home
       </span>
     ),
   },
@@ -71,6 +80,12 @@ const SideMenu: React.FC = () => {
     }
     if (e.key === "4") {
       navigate("/admin/revenue");
+    }
+    if (e.key === "5") {
+      navigate("/admin/announcement");
+    }
+    if (e.key === "6") {
+      navigate("/");
     }
   };
 

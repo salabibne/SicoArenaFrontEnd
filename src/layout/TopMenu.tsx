@@ -6,6 +6,8 @@ import { icons } from "antd/es/image/PreviewGroup";
 import { useNavigate } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
 import useAuthStore from "../Store/useAuthStore";
+import CallUserData from "../HelperFunctions/FetchingUserDataCall";
+import { useFetchUserDataForStore } from "../Store/FetchUserInformation";
 type MenuItem = Required<MenuProps>["items"][number];
 type MenuItemtwo = Required<MenuProps>["itemstwo"][number];
 
@@ -92,10 +94,14 @@ const itemsafterlogin: MenuItem[] = [
 
 const TopMenu: React.FC = () => {
   const [current, setCurrent] = useState("home");
+  const { userDataAfterFetching } = useFetchUserDataForStore();
+  const role = userDataAfterFetching[0]?.role;
+
   const navigate = useNavigate();
 
   const { user } = useAuthStore();
-  // console.log("user exist", user);
+  console.log("user exist", user);
+  CallUserData();
   // console.log("user exist", user?.user?.email);
   const { signOut } = useAuthStore();
 
@@ -105,6 +111,12 @@ const TopMenu: React.FC = () => {
       navigate("/about");
     } else if (e.key === "booking") {
       navigate("/booking");
+    } else if (e.key === "services") {
+      navigate("/service");
+    } else if (e.key === "contact") {
+      navigate("/contact");
+    } else if (e.key === "annc") {
+      navigate("/clientannounce");
     } else {
       navigate("/");
     }
@@ -118,7 +130,12 @@ const TopMenu: React.FC = () => {
           onClick={(e) => {
             setCurrent(e.key);
             if (e.key === "dashboard") {
-              navigate("/dashboard");
+              // navigate("/dashboard");
+              {
+                role === "user"
+                  ? navigate("/personBooking")
+                  : navigate("/admin");
+              }
             } else if (e.key === "logout") {
               signOut();
             }
