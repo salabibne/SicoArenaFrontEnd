@@ -4,10 +4,13 @@ import w3 from "../../public/WelcomeImage/w_3.jpg";
 import w4 from "../../public/WelcomeImage/w_4.jpg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { useNavigate } from "react-router-dom";
 
 
 
 const HomeContent = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="mt-12 py-2">
       {/* main div */}
@@ -21,8 +24,18 @@ const HomeContent = () => {
             offer an unbeatable experience for football and cricket lovers.
               </p>
               <div className="flex gap-4 mt-6">
-                 <button className="btn py-4 px-8 bg-[#28a5da] text-white">Book Now</button>
-                 <button className="btn py-4 px-8 bg-[#4169e1] text-white">Our Services</button>
+                  <button 
+        className="btn py-4 px-8 bg-[#28a5da] text-white"
+        onClick={() => navigate("/booking")}
+      >
+        Book Now
+      </button>
+      <button 
+        className="btn py-4 px-8 bg-[#4169e1] text-white"
+        onClick={() => navigate("/service")}
+      >
+        Our Services
+      </button>
               </div>
             
         </div>

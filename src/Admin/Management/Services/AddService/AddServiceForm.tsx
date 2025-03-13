@@ -120,13 +120,13 @@ const CustomMultipleOptionsInput = ({
 
 const AddServiceForm: React.FC = () => {
   const [sportsOptions] = useState(["Football Unit 1 off-peak",
-    "Football Unit 1 peak","Football Unit 2 off-peak","Football Unit 2 peak"]);
+    "Football Unit 1 peak","Football Unit 2 off-peak","Football Unit 2 peak","Cricket peak","Cricket off-peak"]);
   const [inputValue, setInputValue] = useState("Football Unit 1 off-peak");
 
   const [personOptions] = useState([1, 2, 3]);
   const [selectedPerson, setSelectedPerson] = useState<number | string>(1);
 
-  const [personPriceOptions] = useState(["10-1000", "10-1350", "14-2500","14-3000"]);
+  const [personPriceOptions] = useState(["10-1000", "10-1350", "14-2500","14-3000","22-5000","22-6000"]);
   const [selectedPersonPrice, setSelectedPersonPrice] = useState<
     string | number
   >("10-1000");
@@ -148,7 +148,7 @@ const AddServiceForm: React.FC = () => {
   ]);
   const [selectedTime, setSelectedTime] = useState<string>("12:00 AM");
 
-  const [PlaceOptions] = useState(["Ground", "Roof", "Ground1", "Roof1"]);
+  const [PlaceOptions] = useState(["Ground", "Roof", "Ground1", "Roof1", "Ground2", "Roof2", "Ground3", "Roof3","New Auditorium"]);
   const [selectedPlace, setSelectedPlace] = useState<string>("Ground");
 
   const [statusOptions] = useState(["Active", "Inactive"]);
@@ -206,7 +206,7 @@ const AddServiceForm: React.FC = () => {
         Add Service Details
       </h1>
       <Form layout="vertical" onFinish={onFinish} className="space-y-6">
-        <div className="grid grid-cols-2 gap-36">
+        <div className="grid grid-cols-1 gap-36">
           {/* Sports Type Field */}
           <CustomRadioInput
             label="Sports"
@@ -216,12 +216,12 @@ const AddServiceForm: React.FC = () => {
           />
 
        
-          <CustomRadioInput
+          {/* <CustomRadioInput
             label="Person"
             options={personOptions}
             inputValue={selectedPerson}
             setInputValue={setSelectedPerson}
-          />
+          /> */}
 
 
 
