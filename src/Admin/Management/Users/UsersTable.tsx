@@ -85,7 +85,7 @@ const UsersTable = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/users");
+        const response = await axios.get("https://sicoarenna-backend.onrender.com/users");
 
         setDatas(response.data);
       } catch (error) {

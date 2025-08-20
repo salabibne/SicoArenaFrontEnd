@@ -14,7 +14,7 @@ const Review = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/reviews/three");
+        const response = await axios.get("https://sicoarenna-backend.onrender.com/reviews/three");
         // console.log(response);
         setDatas(response.data);
       } catch (error) {

@@ -20,7 +20,7 @@ const AllReviews = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/reviews");
+        const response = await axios.get("https://sicoarenna-backend.onrender.com/reviews");
         setDatas(response.data);
       } catch (error) {
         alert(error);
@@ -31,7 +31,7 @@ const AllReviews = () => {
 
   const handleSubmit = async (values: any) => {
     try {
-      await axios.post("http://localhost:3000/reviews", values);
+      await axios.post("https://sicoarenna-backend.onrender.com/reviews", values);
       setDatas(prev => [...prev, values]);
       form.resetFields();
       setIsModalOpen(false);

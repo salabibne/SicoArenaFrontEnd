@@ -178,7 +178,7 @@ const AddServiceForm: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/sports-service",
+        "https://sicoarenna-backend.onrender.com/sports-service",
         formSubmission
       );
       console.log("Successful Response", response);

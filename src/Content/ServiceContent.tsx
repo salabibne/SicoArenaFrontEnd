@@ -11,7 +11,7 @@ const ServiceContent = () => {
     const fetchServices = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/sports-service/active"
+          "https://sicoarenna-backend.onrender.com/sports-service/active"
         );
         setDatas(response.data);
       } catch (error) {

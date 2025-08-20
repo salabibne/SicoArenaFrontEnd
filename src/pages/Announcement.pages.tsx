@@ -9,7 +9,7 @@ const AnnouncementClient = () => {
     // Fetch announcements from the server
     const fetchAnnouncements = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/announcement'); // Replace with your API endpoint
+        const response = await axios.get('https://sicoarenna-backend.onrender.com/announcement'); // Replace with your API endpoint
         setAnnouncements(response.data);
       } catch (error) {
         console.error('Error fetching announcements:', error);

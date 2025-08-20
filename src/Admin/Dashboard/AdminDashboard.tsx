@@ -102,7 +102,7 @@ const AdminDashboard: React.FC = () => {
     const fetchTodaysEarning = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/form/earningCount"
+          "https://sicoarenna-backend.onrender.com/form/earningCount"
         );
 
         const earning = response.data.reduce(
@@ -122,7 +122,7 @@ const AdminDashboard: React.FC = () => {
     const fetchTodaysBooking = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/form/bookingCount"
+          "https://sicoarenna-backend.onrender.com/form/bookingCount"
         );
         console.log("resbookingCount");
         setTodaysBooking(response.data);
@@ -138,7 +138,7 @@ const AdminDashboard: React.FC = () => {
     const fetchLiveSports = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/sports-service/live"
+          "https://sicoarenna-backend.onrender.com/sports-service/live"
         );
         setLive(response.data);
       } catch (error) {
@@ -153,7 +153,7 @@ const AdminDashboard: React.FC = () => {
     const fetchWeeklyIncome = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/form/weeklyIncome"
+          "https://sicoarenna-backend.onrender.com/form/weeklyIncome"
         );
         setEarningsData(response.data);
       } catch (error) {
@@ -168,7 +168,7 @@ const AdminDashboard: React.FC = () => {
     const fetchWeeklyBooking = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/form/weeklyBooking"
+          "https://sicoarenna-backend.onrender.com/form/weeklyBooking"
         );
         setBookingsData(response.data);
       } catch (error) {

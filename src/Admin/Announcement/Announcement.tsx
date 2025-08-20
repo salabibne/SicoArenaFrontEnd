@@ -13,7 +13,7 @@ const AnnouncementPage = () => {
   
 console.log("values",values)
     try {
-      const response = await axios.post('http://localhost:3000/announcement', values);
+      const response = await axios.post('https://sicoarenna-backend.onrender.com/announcement', values);
       message.success('Announcement posted successfully!');
       console.log('Server Response:', response.data);
     } catch (error) {

@@ -15,7 +15,7 @@ const PersonBooking = () => {
       const email = userDataAfterFetching[0]?.email;
       try {
         const response = await axios.get(
-          `http://localhost:3000/form/personBooking/${email}`
+          `https://sicoarenna-backend.onrender.com/form/personBooking/${email}`
         );
         setDatas(response.data);
       } catch (error) {

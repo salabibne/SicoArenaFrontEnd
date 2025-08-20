@@ -25,7 +25,7 @@ const PersonalInformation: React.FC = () => {
   // const fetchUserInformation = async (value: string) => {
   //   try {
   //     const informationFetching = await axios.get(
-  //       `http://localhost:3000/users/${value}`
+  //       `https://sicoarenna-backend.onrender.com/users/${value}`
   //     );
   //     console.log(informationFetching.data);
   //     updateUserData(informationFetching.data);

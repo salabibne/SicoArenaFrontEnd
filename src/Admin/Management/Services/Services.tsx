@@ -10,7 +10,7 @@ const Services = () => {
     console.log("Record", record._id);
     try {
       const response = await axios.patch(
-        `http://localhost:3000/sports-service/deactivate/${record._id}`
+        `https://sicoarenna-backend.onrender.com/sports-service/deactivate/${record._id}`
       );
       if (response.status === 200) {
         message.success("This service is deactivated .");
@@ -151,7 +151,7 @@ const Services = () => {
     const fetchServices = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/sports-service/admin"
+          "https://sicoarenna-backend.onrender.com/sports-service/admin"
         );
 
         // const formattedData = response.data.map((item) => ({

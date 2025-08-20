@@ -46,7 +46,7 @@ const SuccessPage = () => {
     const fetchBooking = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/form/personBookingBasedOnTransactionId/${tranId}`
+          `https://sicoarenna-backend.onrender.com/form/personBookingBasedOnTransactionId/${tranId}`
         );
         setBooking(response.data);
       } catch (error) {

@@ -14,7 +14,7 @@ const ProtectedRoute: React.FC<{ requiredRole?: string }> = ({
     const fetchUserInformation = async (email: string) => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/users/${email}`
+          `https://sicoarenna-backend.onrender.com/users/${email}`
         );
         console.log("Fetched User Information:", response.data);
         setAdmin(response.data[0]);

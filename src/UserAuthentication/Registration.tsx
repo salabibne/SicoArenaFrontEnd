@@ -51,7 +51,7 @@ const Registration: React.FC = () => {
 
         try {
           const response = await axios.post(
-            "http://localhost:3000/users",
+            "https://sicoarenna-backend.onrender.com/users",
             values
           );
           console.log(response);

@@ -8,7 +8,7 @@ const BookingsTable = () => {
     // console.log("Record", record._id);
     try {
       const response = await axios.patch(
-        `http://localhost:3000/form/terminate/${record._id}`
+        `https://sicoarenna-backend.onrender.com/form/terminate/${record._id}`
       );
       if (response.status === 200) {
         message.success("Status updated to TERMINATED.");
@@ -183,7 +183,7 @@ const BookingsTable = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/form");
+        const response = await axios.get("https://sicoarenna-backend.onrender.com/form");
 
         setDatas(response.data);
       } catch (error) {

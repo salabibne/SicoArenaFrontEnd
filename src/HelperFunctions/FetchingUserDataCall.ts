@@ -9,7 +9,7 @@ const CallUserData = () => {
 
   //   const fetchUserInformation = async (email: string) => {
   //     try {
-  //       const response = await axios.get(`http://localhost:3000/users/${email}`);
+  //       const response = await axios.get(`https://sicoarenna-backend.onrender.com/users/${email}`);
   //       console.log("Fetched User Information from callUserData:", response.data);
   //       updateUserData(response.data); // Update the state with fetched data
   //     } catch (error) {
@@ -30,7 +30,7 @@ const CallUserData = () => {
     const fetchUserInformation = async (email: string) => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/users/${email}`
+          `https://sicoarenna-backend.onrender.com/users/${email}`
         );
         console.log("Fetched User Information:", response.data);
         updateUserData(response.data);

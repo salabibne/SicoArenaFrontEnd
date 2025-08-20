@@ -69,7 +69,7 @@ export const useBookingFormStore = create((set) => ({
       console.log("Flat Object", flatObjectOfData);
       try {
         const response = await axios.post(
-          "http://localhost:3000/form",
+          "https://sicoarenna-backend.onrender.com/form",
           flatObjectOfData
         );
 

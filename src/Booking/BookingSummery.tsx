@@ -45,7 +45,7 @@ const OrderSummary = () => {
     });
     try {
       const sslResponse = await axios.post(
-        "http://localhost:3000/payment/initiate",
+        "https://sicoarenna-backend.onrender.com/payment/initiate",
         payment
       );
       console.log("SSL Response", sslResponse.data);

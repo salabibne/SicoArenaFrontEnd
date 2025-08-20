@@ -33,7 +33,7 @@ const RevenueSummary = () => {
   useEffect(() => {
     const fetchReveneu = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/form/revenue");
+        const response = await axios.get("https://sicoarenna-backend.onrender.com/form/revenue");
         console.log("revenew response", response);
         const updatedData = response.data.map((entry, index) => ({
           ...entry,

@@ -33,7 +33,7 @@ const SportsAndPerson: React.FC = () => {
     const fetchActiveSports = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/sports-service"
+          "https://sicoarenna-backend.onrender.com/sports-service"
         );
         setActiveSports(response.data);
         console.log("Fetched Active Sports:", response.data);
@@ -64,7 +64,7 @@ const SportsAndPerson: React.FC = () => {
   useEffect(() => {
     const fetchSportsData = async () => {
       if (selectedSport && selectedDate) {
-        const url = `http://localhost:3000/sports-service/${selectedSport}/${selectedDate}`;
+        const url = `https://sicoarenna-backend.onrender.com/sports-service/${selectedSport}/${selectedDate}`;
         console.log("url", url);
         try {
           const response = await axios.get(url);
@@ -85,7 +85,7 @@ const SportsAndPerson: React.FC = () => {
   //   try {
   //     const response = value;
   //     const sportsCategoryFetching = await axios.get(
-  //       `http://localhost:3000/sports-service/${value}`
+  //       `https://sicoarenna-backend.onrender.com/sports-service/${value}`
   //     );
   //     console.log("sportsCategoryFetching", sportsCategoryFetching.data);
   //     // useFetchSportsDataForStore.updateSportsData(sportsCategoryFetching.data);
