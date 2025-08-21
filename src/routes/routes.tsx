@@ -46,9 +46,9 @@ const routes = () => {
           <Route path="/payment/fail" element={<FailPage />} /> */}
         </Route>
         {/* Payment-specific routes */}
-        <Route path="https://sicoarena.onrender.com/payment/success" element={<SuccessPage />} />
-        <Route path="https://sicoarena.onrender.com/payment/cancel" element={<CancelPage />} />
-        <Route path="https://sicoarena.onrender.com/payment/fail" element={<FailPage />} />
+        <Route path="/payment/success" element={<SuccessPage />} />
+        <Route path="/payment/cancel" element={<CancelPage />} />
+        <Route path="/payment/fail" element={<FailPage />} />
 
         <Route element={<ProtectedRoute requiredRole="admin" />}>
           <Route path="/admin" element={<AdminLayout />}>
