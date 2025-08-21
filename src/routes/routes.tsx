@@ -1,4 +1,5 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes,HashRouter } from "react-router-dom";
+
 import HomePage from "../pages/Home.pages";
 import App from "../App";
 import Aboutpages from "../pages/About.pages";
@@ -27,7 +28,7 @@ import AllReviews from "../Reviews/AllReviews";
 
 const routes = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route element={<App />}>
           <Route path="/" element={<HomePage />} />
@@ -63,7 +64,7 @@ const routes = () => {
           </Route>
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
